@@ -19,14 +19,14 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@google-cloud/storage": "^2.5.0",
-    "@node-red/runtime": "^0.20.7",
-    "firebase-admin": "^8.2.0"
+    "@google-cloud/storage": "^5.11.0",
+    "@node-red/runtime": "^2.0.5",
+    "firebase-admin": "^9.11.0"
   },
   "devDependencies": {
-    "fs-extra": "^8.1.0",
+    "fs-extra": "^10.0.0",
     "should": "^13.2.3",
-    "sinon": "^7.3.2",
+    "sinon": "^11.1.2",
     "when": "^3.7.8"
   }
 }
