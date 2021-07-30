@@ -24,16 +24,16 @@ let googleStorage = {
 
   init: (_settings, runtime)=> {
     return new Promise((resolve,reject)=>{
-      //console.log('google-storage init adminApi is '+runtime.adminApi)
-      //console.dir(runtime.adminApi.httpAdmin)
-      //console.dir(_settings)
+      console.log('google-storage init adminApi is '+runtime.adminApi)
+      console.dir(runtime.adminApi.httpAdmin)
+      console.dir(_settings)
       googleStorage.settings = _settings;
       googleStorage.runtime = runtime
 
       if(!_settings.googleStorageBucket || !_settings.googleProjectId || !_settings.googleCredentials){
         reject('Cannot initialize without Google Cloud settings')
       } else {
-        //console.log('---- *** node-red google cloud storage got all needed settings! *** ---')
+        console.log('---- *** node-red google cloud storage got all needed settings! *** ---')
         if(_settings.flowFile){
           flowFile = _settings.flowFile.replace('.json','')
         }
@@ -49,7 +49,7 @@ let googleStorage = {
 
   setupFirebaseListener: ()=>{
     let init = !(admin.apps.length === 0)
-    //console.log('setting up firebase listener for flow reloading')
+    console.log('setting up firebase listener for flow reloading')
     if(!init){
       admin.initializeApp({
         credential: admin.credential.cert(googleStorage.settings.googleCredentials),
@@ -61,7 +61,7 @@ let googleStorage = {
           if(googleStorage.settingFlow !== true){
             console.log('firebase listener got update for new flow')
             let flows = flowref.val()
-            //console.log(JSON.stringify(flows))
+            console.log(JSON.stringify(flows))
 
             googleStorage.runtime.nodes.loadFlows(true).then(function()
             {
@@ -78,11 +78,11 @@ let googleStorage = {
   },
 
   prepopulateFlows: (resolve)=> {
-    //console.log('google-storage prepopulateFlows called')
+    console.log('google-storage prepopulateFlows called')
     googleStorage.getBucket().then((bucket) => {
       googleStorage.getFlows().then((existing_flows)=> {
-        //console.log('existing flows is')
-        //console.dir(existing_flows)
+        console.log('existing flows is')
+        console.dir(existing_flows)
         if (!existing_flows) {
             console.log(">> No default flow found");
             let default_flow = [{
@@ -106,10 +106,10 @@ let googleStorage = {
 
   getBucket: ()=> {
     return new Promise(function(resolve,reject) {
-      //console.log('getBucket called')
+      console.log('getBucket called')
       if (this.bucket)  {
-        //console.log('getBucket found bucket')
-        //console.dir(this.bucket)
+        console.log('getBucket found bucket')
+        console.dir(this.bucket)
         resolve(this.bucket)
       } else {
         bucketName  = googleStorage.settings.googleStorageBucket;
@@ -123,10 +123,10 @@ let googleStorage = {
           credentials: credentials
         }
         storage    = new Storage(opts);
-        //console.dir(opts)
+        console.dir(opts)
         try {
           // Creates the new bucket
-          //console.log('creating bucket with name "'+bucketName+'"')
+          console.log('creating bucket with name "'+bucketName+'"')
           this.bucket = storage.bucket(bucketName)
           resolve(this.bucket)
         }
@@ -147,7 +147,7 @@ let googleStorage = {
     return new Promise(function(resolve,reject)
     {
       console.log('------------------------------------------- saveFlow called for')
-      //console.dir(flows)
+      console.dir(flows)
       let flowData
       if (googleStorage.settings.flowFilePretty)
       {
@@ -163,9 +163,9 @@ let googleStorage = {
         {
           console.log('updating flows through firebase')
           let dbref = admin.database().ref(googleStorage.appname)
-          //console.log('dbref = '+dbref+' typeof = '+(typeof dbref))
+          console.log('dbref = '+dbref+' typeof = '+(typeof dbref))
           dbref.set(flows)
-          //console.log('setref = '+setref+' typeof = '+(typeof setref))
+          console.log('setref = '+setref+' typeof = '+(typeof setref))
           console.log('updated flows through firebase')
           resolve()
         })
@@ -186,7 +186,7 @@ let googleStorage = {
   },
   getSettings: function() {
     return new Promise(function(resolve,reject)  {
-      //console.log('google-storage.getSettings called')
+      console.log('google-storage.getSettings called')
 
       this.getData("settings").then((ssettings) => {
         if (ssettings) {
@@ -202,12 +202,12 @@ let googleStorage = {
   },
 
   saveSettings: function(settings) {
-    //console.log('------------------------------------------- saveSettings')
+    console.log('------------------------------------------- saveSettings')
     let props = ['functionGlobalContext', 'userDir', 'storageModule']
     var s = {}
     for(var p in settings){
       if((typeof settings[p] !== 'function') && !props.includes(p)){
-        //console.log(p+' includes = '+(props.includes(p)))
+        console.log(p+' includes = '+(props.includes(p)))
         s[p] = settings[p]
       }
     }
@@ -216,22 +216,22 @@ let googleStorage = {
   },
 
   getData: function(entryType) {
-    //console.log('------------------------------------------- getData reading single file from path "'+entryType+'"')
+    console.log('------------------------------------------- getData reading single file from path "'+entryType+'"')
     return new Promise(function(resolve,reject) {
       this.getBucket().then((bucket)=>{
         let fname = googleStorage.appname + '/' + entryType+'.json'
-        //console.log('getData checking if file '+fname+' exists')
+        console.log('getData checking if file '+fname+' exists')
         let file = bucket.file(fname)
         file.exists().then((exists)=>{
-          //console.log('getData file '+entryType+' exists = '+exists[0])
+          console.log('getData file '+entryType+' exists = '+exists[0])
           if(exists[0]){
-            //console.log('downloading file '+entryType)
+            console.log('downloading file '+entryType)
             file.download().then((file)=>{
-              //console.log('storage-read.getData got file '+entryType)
-              //console.dir(file)
+              console.log('storage-read.getData got file '+entryType)
+              console.dir(file)
               let rv = JSON.parse(file.toString())
-              //console.log('getData returning: '+rv)
-              //console.dir(rv)
+              console.log('getData returning: '+rv)
+              console.dir(rv)
               resolve(rv)
             })
           }else {
@@ -249,7 +249,7 @@ let googleStorage = {
 
   saveData: function(entryType, dataEntry, bypass) {
     console.log('------------------------------------------- google-storage saveData for "'+entryType+'" bypass = '+bypass)
-    //console.dir(dataEntry)
+    console.dir(dataEntry)
     return new Promise(function(resolve,reject) {
       if(!dataEntry){
         dataEntry = ''
@@ -257,8 +257,8 @@ let googleStorage = {
       console.log('getting bucket..')
       this.getBucket().then((bucket) => {
         console.log('-----------------------saveData saving file "'+entryType+'"')
-        //console.dir(dataEntry)
-        //console.log('-----------------------saveData')
+        console.dir(dataEntry)
+        console.log('-----------------------saveData')
         let f    = googleStorage.appname + '/' + entryType + (entryType.indexOf('.js') > -1 ? '' : '.json')
         console.log('f = "'+f+'"')
         let file = bucket.file(f);
@@ -277,9 +277,9 @@ let googleStorage = {
   },
 
   saveLibraryEntry: function(type,path,meta,body) {
-    //console.log('------------------------------------------- saveLibrary called for type='+type+', path='+path+', meta='+meta+', body='+body)
+    console.log('------------------------------------------- saveLibrary called for type='+type+', path='+path+', meta='+meta+', body='+body)
     let key =  "lib/" + type + (path.substr(0) != "/" ? "/" : "") + path;
-    //console.log('saveLibraryEntry for key "'+key+'"')
+    console.log('saveLibraryEntry for key "'+key+'"')
     return this.saveData(key, body)
   },
 
@@ -287,7 +287,7 @@ let googleStorage = {
     return new Promise(function(resolve,reject)
     {
       let key = "lib/" + type + (path.substr(0) != "/" ? "/" : "") + path;
-      //console.log("------------------------------------------- get library entry: " + type + ":" + path);
+      console.log("------------------------------------------- get library entry: " + type + ":" + path);
       if(key.lastIndexOf('.') > key.length-4){
         return this.getSingleLibraryFile(key)
       } else {
@@ -301,16 +301,16 @@ let googleStorage = {
       this.getBucket().then((bucket) => {
         let file = bucket.file(key)
         file.exists().then((exists) => {
-          //console.log('getLibraryEntry file ' + key + ' exists = ' + exists[0])
+          console.log('getLibraryEntry file ' + key + ' exists = ' + exists[0])
           if (exists[0]) {
-            //console.log('downloading file ' + key)
+            console.log('downloading file ' + key)
             file.get().then((res) => {
-              //console.log('storage-read.getLibraryEntry got file info ' + res)
-              //console.dir(res)
+              console.log('storage-read.getLibraryEntry got file info ' + res)
+              console.dir(res)
               let file = res[0]
-              //console.dir(file)
+              console.dir(file)
               let rv   = JSON.parse(file.toString())
-              //console.log('getLibraryEntry returning: ' + rv)
+              console.log('getLibraryEntry returning: ' + rv)
               resolve(rv)
             })
           } else {
@@ -334,11 +334,11 @@ let googleStorage = {
         }
 
         bucket.getFiles(options).then((files)=>{
-          //console.log('got file listing')
-          //console.dir(files[0])
+          console.log('got file listing')
+          console.dir(files[0])
           let f = files[0].filter((e)=>{ return e.name[e.name.length-1] !== '/' })
-          //console.log('getLibraryDirectoryListing for path '+key)
-          //console.dir(f)
+          console.log('getLibraryDirectoryListing for path '+key)
+          console.dir(f)
           resolve(f)
         })
       })

@@ -14,14 +14,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/psvensson/node-red-contrib-storage.google.git"
+    "url": "git+https://github.com/nacartwright/node-red-contrib-storage.google"
   },
   "author": "",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/psvensson/node-red-contrib-storage.google/issues"
-  },
-  "homepage": "https://github.com/psvensson/node-red-contrib-storage.google#readme",
   "dependencies": {
     "@google-cloud/storage": "^2.5.0",
     "@node-red/runtime": "^0.20.7",
