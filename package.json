@@ -19,8 +19,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@google-cloud/storage": "^5.11.0",
-    "@node-red/runtime": "^2.0.5",
-    "firebase-admin": "^9.11.0"
+    "@google-cloud/storage": "latest",
+    "@node-red/runtime": "latest",
+    "firebase-admin": "latest"
   }
 }
