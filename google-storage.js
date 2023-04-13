@@ -146,8 +146,8 @@ let googleStorage = {
   saveFlows: function(flows) {
     return new Promise(function(resolve,reject)
     {
-      console.log('------------------------------------------- saveFlow called for')
-      console.dir(flows)
+      console.log('------------------------------------------- saveFlow called')
+      // console.dir(flows)
       let flowData
       if (googleStorage.settings.flowFilePretty)
       {
@@ -248,7 +248,7 @@ let googleStorage = {
 
   saveData: function(entryType, dataEntry, bypass) {
     console.log('------------------------------------------- google-storage saveData for "'+entryType+'" bypass = '+bypass)
-    console.dir(dataEntry)
+    // console.dir(dataEntry)
     return new Promise(function(resolve,reject) {
       if(!dataEntry){
         dataEntry = ''
@@ -256,7 +256,7 @@ let googleStorage = {
       console.log('getting bucket..')
       this.getBucket().then((bucket) => {
         console.log('-----------------------saveData saving file "'+entryType+'"')
-        console.dir(dataEntry)
+        // console.dir(dataEntry)
         console.log('-----------------------saveData')
         let f    = googleStorage.appname + '/' + entryType + (entryType.indexOf('.js') > -1 ? '' : '.json')
         console.log('f = "'+f+'"')
