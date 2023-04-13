@@ -165,7 +165,6 @@ let googleStorage = {
           let dbref = admin.database().ref(googleStorage.appname)
           console.log('dbref = '+dbref+' typeof = '+(typeof dbref))
           dbref.set(flows)
-          console.log('setref = '+setref+' typeof = '+(typeof setref))
           console.log('updated flows through firebase')
           resolve()
         })
