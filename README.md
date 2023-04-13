@@ -1,4 +1,5 @@
-# node-red-contrib-storage-google
+# node-red-contrib-firebase-google
+Taken from node-red-contrib-contrib-google
 A node red storage module which uses Google Storage  (loosely based on the AWS S3 storage module)
 
 This module supports automatic reloading of flows.
