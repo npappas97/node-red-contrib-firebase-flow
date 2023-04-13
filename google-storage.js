@@ -25,8 +25,8 @@ let googleStorage = {
   init: (_settings, runtime)=> {
     return new Promise((resolve,reject)=>{
       console.log('google-storage init adminApi is '+runtime.adminApi)
-      console.dir(runtime.adminApi.httpAdmin)
-      console.dir(_settings)
+      // console.dir(runtime.adminApi.httpAdmin)
+      // console.dir(_settings)
       googleStorage.settings = _settings;
       googleStorage.runtime = runtime
 
@@ -61,7 +61,7 @@ let googleStorage = {
           if(googleStorage.settingFlow !== true){
             console.log('firebase listener got update for new flow')
             let flows = flowref.val()
-            console.log(JSON.stringify(flows))
+            // console.log(JSON.stringify(flows))
 
             googleStorage.runtime.nodes.loadFlows(true).then(function()
             {
@@ -82,7 +82,7 @@ let googleStorage = {
     googleStorage.getBucket().then((bucket) => {
       googleStorage.getFlows().then((existing_flows)=> {
         console.log('existing flows is')
-        console.dir(existing_flows)
+        // console.dir(existing_flows)
         if (!existing_flows) {
             console.log(">> No default flow found");
             let default_flow = [{
@@ -109,7 +109,7 @@ let googleStorage = {
       console.log('getBucket called')
       if (this.bucket)  {
         console.log('getBucket found bucket')
-        console.dir(this.bucket)
+        // console.dir(this.bucket)
         resolve(this.bucket)
       } else {
         bucketName  = googleStorage.settings.googleStorageBucket;
@@ -123,7 +123,7 @@ let googleStorage = {
           credentials: credentials
         }
         storage    = new Storage(opts);
-        console.dir(opts)
+        // console.dir(opts)
         try {
           // Creates the new bucket
           console.log('creating bucket with name "'+bucketName+'"')
@@ -227,10 +227,10 @@ let googleStorage = {
             console.log('downloading file '+entryType)
             file.download().then((file)=>{
               console.log('storage-read.getData got file '+entryType)
-              console.dir(file)
+              // console.dir(file)
               let rv = JSON.parse(file.toString())
               console.log('getData returning: '+rv)
-              console.dir(rv)
+              // console.dir(rv)
               resolve(rv)
             })
           }else {
