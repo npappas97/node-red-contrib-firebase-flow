@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/npappas97/node-red-contrib-storage.google"
+    "url": "git+https://github.com/npappas97/node-red-contrib-firebase-flow"
   },
   "author": "",
   "license": "MIT",
