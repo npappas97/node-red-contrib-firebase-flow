@@ -1,12 +1,14 @@
-# node-red-contrib-storage-google
-A node red storage module which uses Google Storage  (loosely based on the AWS S3 storage module)
+# node-red-contrib-firebase-google
+
+Taken from node-red-contrib-contrib-google
+A node red storage module which uses Google Storage (based on node-red-config-storage-google) (loosely based on the AWS S3 storage module)
 
 This module supports automatic reloading of flows.
 
 ## Installation
 
     npm i --save node-red-contrib-storage-google
-    
+
 Inside the settings.js file, add a line for storagemodule, like this
 
     storageModule: require('node-red-contrib-storage-google')
@@ -44,7 +46,7 @@ Firebase service accounts already have the proper rights for cloud storage (amon
 4. Go to the 'Service Account' tab
 5. Download a new private key. The content of the file is the property 'googleCredenttials' above.
 
-The other google* settings can be found in the very first tab. 
+The other google\* settings can be found in the very first tab.
 
 ## Usage
 
@@ -57,9 +59,7 @@ running in the cloud, perhaps in docker containers, long running or as cloud fun
 To also enable live reloading of all instances, you must use a serivce account certificate from firebase and also set
 the properties 'googleFirebaseReload' and 'googleDbUrl'.
 
-This will let the plugin register listeners for a specific path in the reactive firebase service, so that they will get a callback whenever 
+This will let the plugin register listeners for a specific path in the reactive firebase service, so that they will get a callback whenever
 the flows have changed (been deployed by the developer). Firebase Rtdb support up to 100000 simultaneous connections, which is then the upper limit for cloud instances.
 
 This usage of firebase is well below the free tier so moderate use (100 instance perhaps?) will never cost anything.
- 
- 
