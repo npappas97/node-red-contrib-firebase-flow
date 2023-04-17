@@ -7,11 +7,11 @@ This module supports automatic reloading of flows.
 
 ## Installation
 
-    npm i --save node-red-contrib-firebase-google
+    npm i --save node-red-contrib-firebase-flow
 
 Inside the settings.js file, add a line for storagemodule, like this
 
-    storageModule: require('node-red-contrib-firebase-google')
+    storageModule: require('node-red-contrib-firebase-flow')
 
 ## New properties for settings.js
 
